@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  anyconnect:
+    image: anyconnectproxy:latest
+    env_file:
+      - dev.env
+    entrypoint: [/opt/entrypoint.sh]
+    ports:
+      - "9052:9052"
+    build:
+      context: .
+      dockerfile: Dockerfile
