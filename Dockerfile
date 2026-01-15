@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:trixie-slim
 RUN set -eux; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
