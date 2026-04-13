@@ -1,21 +1,26 @@
 #!/bin/bash
-
 set -e
 
-args="--user=$VPN_USER --passwd-on-stdin"
-if ! [[ -z $AUTH_GROUP ]]; then
-    args="$args --authgroup=$AUTH_GROUP"
-fi
-if ! [[ -z $SERVER_CERT_PIN ]]; then
-    args="$args --servercert=$SERVER_CERT_PIN"
-fi
-if ! [[ -z $FORM_ENTRY ]]; then
-    args="$args --form-entry=$FORM_ENTRY"
-fi
-if ! [[ -z $VERBOSITY ]]; then
-    args="$args -$VERBOSITY"
-fi
+# Use an array to store arguments
+args=(
+    "--user=$VPN_USER"
+    "--passwd-on-stdin"
+)
 
-echo $VPN_PASSWORD | openconnect $args --dump --csd-wrapper=/usr/libexec/openconnect/csd-wrapper.sh --script-tun --script "ocproxy -g -k 60 -D 9052" --os=linux-64 $VPN_HOST
+# Append to array only if variable is set
+[[ -n $AUTH_GROUP ]]       && args+=("--authgroup=$AUTH_GROUP")
+[[ -n $SERVER_CERT_PIN ]]   && args+=("--servercert=$SERVER_CERT_PIN")
+[[ -n $FORM_ENTRY ]]        && args+=("--form-entry=$FORM_ENTRY")
+[[ -n $VERBOSITY ]]         && args+=("-$VERBOSITY")
+
+# Use printf to avoid trailing newlines and keep it secure
+printf "%s" "$VPN_PASSWORD" | openconnect "${args[@]}" \
+    --dump \
+    --csd-wrapper=/usr/libexec/openconnect/csd-wrapper.sh \
+    --script-tun \
+    --script "ocproxy -g -k 60 -D 9052" \
+    --os=linux-64 \
+    --useragent AnyConnect \
+    "$VPN_HOST"
 
 exec "$@"
