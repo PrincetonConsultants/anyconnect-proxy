@@ -6,11 +6,18 @@ RUN set -eux; \
 		curl \
 		ocproxy \
 		openconnect \
+		yubico-piv-tool \
+		yubikey-manager \
+		pcscd \
+		ykcs11\
+		opensc\
+		gnutls-bin\
+		libccid\
+		usbutils\
 	; \
 	rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /opt
 
 EXPOSE 9052
-
 ENTRYPOINT ["/opt/entrypoint.sh"]

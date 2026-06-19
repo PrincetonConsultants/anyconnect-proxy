@@ -1,13 +1,15 @@
-version: '3.4'
-
 services:
   anyconnect:
     image: anyconnectproxy:latest
+    container_name: anyconnectproxy
     env_file:
       - dev.env
-    entrypoint: [/opt/entrypoint.sh]
     ports:
       - "9052:9052"
     build:
       context: .
       dockerfile: Dockerfile
+    devices:
+      - /dev/bus/usb:/dev/bus/usb 
+      - /dev/usb:/dev/usb
+      - /dev/net/tun:/dev/net/tun

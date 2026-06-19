@@ -25,3 +25,15 @@ This repository provides a dockerized version of openconnect. The container acce
 SSH can be configured to route its traffic through a SOCKS proxy:
 `ssh user@remote -o "ProxyCommand=/usr/bin/nc -X 5 -x 127.0.0.1:443 %h %p"`
 This can also be added to the `~/.ssh/config` file.
+
+## Yubikey MFA
+  https://gist.github.com/buswedg/270e7594a68ff99f2af659a97661eb5e
+# share usb device from windows with wsl
+  https://learn.microsoft.com/en-us/windows/wsl/connect-usb
+  winget install --interactive --exact dorssel.usbipd-win
+  usbipd list
+  usbipd bind --busid #busid
+  usbipd attach --wsl --busid #busid
+  -- see example YubiKeyAttachToWSL.ps1 run as admin
+
+don't run pcscd on wsl host as found compatibilty issue with container and host versions
