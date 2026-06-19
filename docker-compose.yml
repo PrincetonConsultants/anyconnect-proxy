@@ -1,5 +1,6 @@
 services:
   anyconnect:
+    restart: always
     image: anyconnectproxy:latest
     container_name: anyconnectproxy
     env_file:
@@ -9,7 +10,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    devices:
-      - /dev/bus/usb:/dev/bus/usb 
-      - /dev/usb:/dev/usb
-      - /dev/net/tun:/dev/net/tun
+    ## Pass in usb devices if needed for MFA
+    # devices:
+    #   - /dev/bus/usb:/dev/bus/usb 
+    #   - /dev/usb:/dev/usb
+    #   - /dev/net/tun:/dev/net/tun

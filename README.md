@@ -1,4 +1,5 @@
 # anyconnect-proxy
+
 Dockerized openconnect client. Compatible with Cisco AnyConnect (CSD). Exposes socks5 proxy.
 
 ## The problems with Cisco AnyConnect
@@ -27,13 +28,14 @@ SSH can be configured to route its traffic through a SOCKS proxy:
 This can also be added to the `~/.ssh/config` file.
 
 ## Yubikey MFA
-  https://gist.github.com/buswedg/270e7594a68ff99f2af659a97661eb5e
-# share usb device from windows with wsl
-  https://learn.microsoft.com/en-us/windows/wsl/connect-usb
-  winget install --interactive --exact dorssel.usbipd-win
-  usbipd list
-  usbipd bind --busid #busid
-  usbipd attach --wsl --busid #busid
-  -- see example YubiKeyAttachToWSL.ps1 run as admin
+  [YubiKey setup gist](https://gist.github.com/buswedg/270e7594a68ff99f2af659a97661eb5e)
+
+# Share usb device from windows with wsl
+  [USB Sharing with WSL](https://learn.microsoft.com/en-us/windows/wsl/connect-usb)
+  * winget install --interactive --exact dorssel.usbipd-win
+  * usbipd list
+  * usbipd bind --busid #busid
+  * usbipd attach --wsl --busid #busid
+  * -- see example YubiKeyAttachToWSL.ps1 run as admin
 
 don't run pcscd on wsl host as found compatibilty issue with container and host versions
