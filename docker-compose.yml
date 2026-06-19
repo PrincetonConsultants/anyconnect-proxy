@@ -1,6 +1,6 @@
 services:
   anyconnect:
-    restart: always
+    # restart: always
     image: anyconnectproxy:latest
     container_name: anyconnectproxy
     env_file:
@@ -10,6 +10,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    ## Pass in cert and key files if needed for MFA
+    # volumes:
+    #   - ./certs/user.crt:/certs/user.crt:ro
+    #   - ./certs/user.key:/certs/user.key:ro
     ## Pass in usb devices if needed for MFA
     # devices:
     #   - /dev/bus/usb:/dev/bus/usb 
