@@ -40,10 +40,10 @@ fi
 [[ -n $SERVER_CERT_PIN ]]   && args+=("--servercert=$SERVER_CERT_PIN")
 [[ -n $FORM_ENTRY ]]        && args+=("--form-entry=$FORM_ENTRY")
 [[ -n $VERBOSITY ]]         && args+=("-$VERBOSITY")
+[[ -n $DUMP ]]              && args+=("--dump")
 
 # Use printf to avoid trailing newlines and keep it secure
 printf "%s" "$VPN_PASSWORD" | openconnect "${args[@]}" \
-    --dump \
     --csd-wrapper=/usr/libexec/openconnect/csd-wrapper.sh \
     --script-tun \
     --script "ocproxy -g -k 60 -D 9052" \
