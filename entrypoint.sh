@@ -11,13 +11,19 @@ args=(
 [[ -f "/certs/vpn_ca.crt" ]] && args+=("--cafile=/certs/vpn_ca.crt")
 # set parameters for MFA mode if set
 if [[ -n $MFA_MODE && $MFA_MODE == "yubikey" ]]; then
+    # Yubikey slot
+    # default to slot 1 if not set
+    MFA_SLOT=${MFA_SLOT:-1}
+    # Safely format the slot number to a 2-digit padded decimal (e.g., 4 -> 04, 10 -> 10)
+    formatted_slot=$(printf "%02d" "$MFA_SLOT")
     pcscd --disable-polkit &
     sleep 2
     # lsusb
     # find /usr/lib -name "*libykcs11*" -print0 | xargs -0 echo
     # p11tool --provider=/usr/lib/x86_64-linux-gnu/libykcs11.so --list-tokens
     # ykman piv info
-    args+=("--certificate=pkcs11:module-path=/usr/lib/x86_64-linux-gnu/libykcs11.so;id=%01;type=cert")
+    args+=("--certificate=pkcs11:module-path=/usr/lib/x86_64-linux-gnu/libykcs11.so;id=%$formatted_slot;type=cert")
+    args+=("--sslkey=pkcs11:module-path=/usr/lib/x86_64-linux-gnu/libykcs11.so;id=%$formatted_slot;type=private")
     args+=("--key-password=$KEY_PASSWORD")
 elif [[ -n $MFA_MODE && $MFA_MODE == "user_cert" ]]; then
     # Standard User Cert
